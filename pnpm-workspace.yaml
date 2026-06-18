@@ -1,0 +1,5 @@
+packages:
+  # Shared type contracts — prerequisite for all other packages
+  - "jobs/00_shared_contracts"
+  # Runtime packages built by agent jobs 01–06
+  - "packages/*"

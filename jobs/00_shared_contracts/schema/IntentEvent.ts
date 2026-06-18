@@ -10,7 +10,7 @@
  * and delivers clean, typed intent objects to application code.
  */
 
-import type { BandName } from "./FeatureVector";
+import type { BandName } from "./FeatureVector.js";
 
 /** Canonical set of supported intent labels. See `constants/intent_labels.ts`. */
 export type IntentLabel =
@@ -115,10 +115,16 @@ export interface IntentEvent {
  * where full feature data is not needed.
  */
 export interface IntentEventSummary {
+  /** UUID v4 matching the full IntentEvent this summary was derived from. */
   intentId: string;
+  /** Decoded intent label — the top-ranked classification result. */
   label: IntentLabel;
+  /** Posterior probability of the winning label, in [0, 1]. */
   confidence: number;
+  /** End-to-end latency in milliseconds from first sample to event emission. */
   endToEndLatencyMs: number;
+  /** Timestamp of the most recent sample, nanoseconds since Unix epoch. */
   timestampNs: bigint;
+  /** True when this event was produced during an artifact-contaminated window. */
   artifactFlag: boolean;
 }

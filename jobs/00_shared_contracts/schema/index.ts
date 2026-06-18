@@ -10,20 +10,20 @@ export type {
   RawSignalFrame,
   EventMarker,
   DeviceInfo,
-} from "./RawSignalFrame";
+} from "./RawSignalFrame.js";
 
 export type {
   BandName,
   BandPowerMap,
   FeatureVector,
-} from "./FeatureVector";
+} from "./FeatureVector.js";
 
 export type {
   IntentLabel,
   ClassifierType,
   IntentEvent,
   IntentEventSummary,
-} from "./IntentEvent";
+} from "./IntentEvent.js";
 
 export type {
   DeviceState,
@@ -33,10 +33,10 @@ export type {
   DeviceAdapterConfig,
   DeviceAdapter,
   DeviceDiagnostics,
-} from "./DeviceAdapter";
+} from "./DeviceAdapter.js";
 
 export type {
   SessionState,
   PipelineConfig,
   SessionMetadata,
-} from "./SessionMetadata";
+} from "./SessionMetadata.js";

@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://neuroos.dev/schemas/neuroos-config",
+  "title": "NeuroOS Configuration",
+  "description": "neuroos.config.yaml schema. Validated by ConfigStore at startup.",
+  "type": "object",
+  "required": ["version", "device", "dsp", "intent", "paradigm", "api", "storage"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Config schema version. Must be '1.0'.",
+      "enum": ["1.0"]
+    },
+    "device": {
+      "type": "object",
+      "required": ["adapter", "numChannels", "sampleRateHz", "samplesPerFrame"],
+      "additionalProperties": false,
+      "properties": {
+        "adapter": { "type": "string", "minLength": 1 },
+        "numChannels": { "type": "integer", "minimum": 1, "maximum": 256 },
+        "sampleRateHz": { "type": "number", "minimum": 64, "maximum": 40000 },
+        "samplesPerFrame": { "type": "integer", "minimum": 1 },
+        "hardwareFilter": { "type": "boolean" },
+        "driverOptions": { "type": "object" }
+      }
+    },
+    "dsp": {
+      "type": "object",
+      "required": ["spatialFilterType", "temporalFilterType", "bandpassHz", "windowLengthSec", "windowStepSec"],
+      "additionalProperties": false,
+      "properties": {
+        "spatialFilterType": {
+          "type": "string",
+          "enum": ["car", "laplacian", "csp", "none"]
+        },
+        "temporalFilterType": {
+          "type": "string",
+          "enum": ["bandpass_fir", "autoregressive", "p300_average", "slow_wave"]
+        },
+        "bandpassHz": {
+          "type": "array",
+          "items": { "type": "number", "minimum": 0 },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "windowLengthSec": { "type": "number", "minimum": 0.1, "maximum": 10 },
+        "windowStepSec": { "type": "number", "minimum": 0.01, "maximum": 5 }
+      }
+    },
+    "intent": {
+      "type": "object",
+      "required": ["classifierType", "modelPath", "inferenceRateHz", "confidenceThreshold"],
+      "additionalProperties": false,
+      "properties": {
+        "classifierType": {
+          "type": "string",
+          "enum": ["lda", "csp_lda", "p300_template", "cnn", "lstm", "transformer", "ensemble"]
+        },
+        "modelPath": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+        "inferenceRateHz": { "type": "number", "minimum": 1, "maximum": 100 },
+        "confidenceThreshold": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "paradigm": {
+      "type": "object",
+      "required": ["type", "trialLengthSec", "itiSec"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["motor_imagery", "p300_speller", "scp_control", "free"]
+        },
+        "trialLengthSec": { "oneOf": [{ "type": "number", "minimum": 0.5 }, { "type": "null" }] },
+        "itiSec": { "type": "number", "minimum": 0 }
+      }
+    },
+    "api": {
+      "type": "object",
+      "required": ["port", "host"],
+      "additionalProperties": false,
+      "properties": {
+        "port": { "type": "integer", "minimum": 1024, "maximum": 65535 },
+        "host": { "type": "string" },
+        "corsOrigins": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "storage": {
+      "type": "object",
+      "required": ["sessionsDir", "maxSessionAgeDays"],
+      "additionalProperties": false,
+      "properties": {
+        "sessionsDir": { "type": "string" },
+        "maxSessionAgeDays": { "type": "integer", "minimum": 1 }
+      }
+    }
+  }
+}

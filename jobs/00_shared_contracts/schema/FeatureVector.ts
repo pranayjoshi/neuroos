@@ -9,7 +9,7 @@
  * only ever sees this structure, never raw samples.
  */
 
-import type { SignalType } from "./RawSignalFrame";
+import type { SignalType } from "./RawSignalFrame.js";
 
 /** Canonical EEG frequency band names. */
 export type BandName = "delta" | "theta" | "alpha" | "beta" | "gamma" | "high_gamma";

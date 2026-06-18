@@ -8,7 +8,7 @@
  * never parse raw signal data; they only react to these typed labels.
  */
 
-import type { IntentLabel } from "../schema/IntentEvent";
+import type { IntentLabel } from "../schema/IntentEvent.js";
 
 export interface IntentLabelDefinition {
   label: IntentLabel;

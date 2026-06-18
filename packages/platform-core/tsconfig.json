@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "noEmit": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "paths": {
+      "@neuroos/shared-contracts/schema": ["../../jobs/00_shared_contracts/schema/index.ts"],
+      "@neuroos/shared-contracts/constants": ["../../jobs/00_shared_contracts/constants/index.ts"]
+    }
+  },
+  "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

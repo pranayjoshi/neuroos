@@ -5,7 +5,7 @@
  * DSP pipeline to select appropriate filter parameters.
  */
 
-import type { SignalType } from "../schema/RawSignalFrame";
+import type { SignalType } from "../schema/RawSignalFrame.js";
 
 export interface SignalTypeProfile {
   type: SignalType;

@@ -1,3 +1,3 @@
-export * from "./signal_bands";
-export * from "./signal_types";
-export * from "./intent_labels";
+export * from "./signal_bands.js";
+export * from "./signal_types.js";
+export * from "./intent_labels.js";

@@ -93,14 +93,24 @@ export interface EventMarker {
  * Metadata emitted once at session start, describing hardware configuration.
  */
 export interface DeviceInfo {
+  /** Unique device id, same format as RawSignalFrame.deviceId. */
   deviceId: string;
+  /** Hardware manufacturer name, e.g. `"OpenBCI"`, `"Neurosity"`. */
   vendor: string;
+  /** Hardware model name, e.g. `"Cyton"`, `"Crown"`. */
   model: string;
+  /** Device firmware version string. Used for compatibility checks. */
   firmwareVersion: string;
+  /** Total number of EEG/signal channels available on this device. */
   numChannels: number;
+  /** Hardware sample rate in Hz (as actually configured, may differ from requested). */
   sampleRateHz: number;
+  /** Signal modality this device produces. */
   signalType: SignalType;
+  /** Channel labels in acquisition order, following the 10-20 system. */
   channelLabels: string[];
+  /** Analog-to-digital converter resolution in bits (e.g. 24 for OpenBCI Cyton). */
   adResolutionBits: number;
+  /** Reference electrode designation, e.g. `"SRB2"`, `"linked-mastoids"`, `"average"`. */
   referenceElectrode: string;
 }

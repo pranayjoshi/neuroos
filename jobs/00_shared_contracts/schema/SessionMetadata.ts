@@ -9,7 +9,7 @@
  * at session start and remain constant throughout a data file.
  */
 
-import type { DeviceInfo } from "./RawSignalFrame";
+import type { DeviceInfo } from "./RawSignalFrame.js";
 
 /** Possible states for a session lifecycle. */
 export type SessionState =

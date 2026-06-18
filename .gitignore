@@ -1,0 +1,64 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+*.js
+*.d.ts
+*.d.ts.map
+*.js.map
+!jest.config.js
+!turbo.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+.env/
+build/
+develop-eggs/
+lib/
+lib64/
+sdist/
+wheels/
+*.egg
+MANIFEST
+
+# Test & coverage
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Turbo
+.turbo/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# NeuroOS data files
+*.ndf
+*.ndf.events
+~/.neuroos/

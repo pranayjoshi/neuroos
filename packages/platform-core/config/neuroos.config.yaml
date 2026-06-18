@@ -1,0 +1,41 @@
+# neuroos.config.yaml — NeuroOS Platform Core default configuration
+# Validated against neuroos.config.schema.json at startup.
+# See jobs/04_platform_core/JOB.md for all option descriptions.
+version: "1.0"
+
+device:
+  adapter: "neuroos-simulator"      # "neuroos-simulator" | "openbci-cyton" | plugin path
+  numChannels: 16
+  sampleRateHz: 256
+  samplesPerFrame: 16
+  hardwareFilter: false
+  driverOptions: {}
+
+dsp:
+  spatialFilterType: "car"              # "car" | "laplacian" | "csp" | "none"
+  temporalFilterType: "autoregressive"  # "bandpass_fir" | "autoregressive" | "p300_average" | "slow_wave"
+  bandpassHz: [1, 40]
+  windowLengthSec: 1.0
+  windowStepSec: 0.0625                 # 16 Hz update rate (1/16 = 62.5 ms)
+
+intent:
+  classifierType: "lda"           # "lda" | "csp_lda" | "p300_template" | "cnn" | "lstm" | "ensemble"
+  modelPath: null                 # null = use pretrained default bundled with intent-engine
+  inferenceRateHz: 16
+  confidenceThreshold: 0.6
+
+paradigm:
+  type: "motor_imagery"           # "motor_imagery" | "p300_speller" | "scp_control" | "free"
+  trialLengthSec: 4.0
+  itiSec: 2.0
+
+api:
+  port: 3000
+  host: "127.0.0.1"
+  corsOrigins:
+    - "http://localhost:3000"
+    - "http://localhost:5173"
+
+storage:
+  sessionsDir: "~/.neuroos/sessions"
+  maxSessionAgeDays: 30

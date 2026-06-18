@@ -13,7 +13,7 @@
  * system clock by controlling the acquisition rate.
  */
 
-import type { DeviceInfo, RawSignalFrame } from "./RawSignalFrame";
+import type { DeviceInfo, RawSignalFrame } from "./RawSignalFrame.js";
 
 /** Lifecycle state of a device adapter. */
 export type DeviceState =

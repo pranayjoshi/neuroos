@@ -3,7 +3,10 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "dist",
-    "noEmit": true
+    "noEmit": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true
   },
   "include": ["schema/**/*.ts", "constants/**/*.ts"],
   "exclude": ["node_modules", "dist", "scripts"]

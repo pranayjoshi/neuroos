@@ -9,7 +9,7 @@
  * consistent with BCI2000 implementations (Schalk et al., 2004).
  */
 
-import type { BandName } from "../schema/FeatureVector";
+import type { BandName } from "../schema/FeatureVector.js";
 
 export interface BandDefinition {
   /** Band name, matches the BandName union type. */

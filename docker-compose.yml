@@ -1,0 +1,74 @@
+version: "3.9"
+
+# NeuroOS multi-service development environment.
+# Services are stubs — implemented by agent jobs 01–06.
+#
+# Usage:
+#   docker compose up          # start all services
+#   docker compose up platform # start platform only
+#   docker compose logs -f     # stream logs
+
+services:
+  # Job 01 — Data Generator (Python)
+  # Streams JSONL RawSignalFrame dicts to stdout, consumed by platform via subprocess pipe.
+  data-generator:
+    build:
+      context: ./packages/data-generator
+      dockerfile: Dockerfile
+    volumes:
+      - ./packages/data-generator:/app
+      - ./jobs/00_shared_contracts:/app/shared_contracts:ro
+    environment:
+      - SCENARIO=motor_imagery_left
+      - NUM_CHANNELS=16
+      - SAMPLE_RATE_HZ=256
+      - DURATION_SEC=0   # 0 = run indefinitely
+    command: ["python", "-m", "data_generator", "--scenario", "${SCENARIO:-rest}", "--channels", "${NUM_CHANNELS:-16}"]
+
+  # Job 02 — DSP Pipeline (Python)
+  # Reads RawSignalFrame JSONL from stdin, writes FeatureVector JSONL to stdout.
+  dsp-pipeline:
+    build:
+      context: ./packages/dsp-pipeline
+      dockerfile: Dockerfile
+    volumes:
+      - ./packages/dsp-pipeline:/app
+      - ./jobs/00_shared_contracts:/app/shared_contracts:ro
+    depends_on:
+      - data-generator
+
+  # Job 03 — Intent Engine (Python)
+  # Reads FeatureVector JSONL from stdin, writes IntentEvent JSONL to stdout.
+  intent-engine:
+    build:
+      context: ./packages/intent-engine
+      dockerfile: Dockerfile
+    volumes:
+      - ./packages/intent-engine:/app
+      - ./jobs/00_shared_contracts:/app/shared_contracts:ro
+    depends_on:
+      - dsp-pipeline
+
+  # Job 04 — Platform Core (Node.js/TypeScript)
+  # REST + WebSocket API server. Orchestrates all other services.
+  platform:
+    build:
+      context: .
+      dockerfile: packages/platform-core/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./packages/platform-core/config/neuroos.config.yaml:/app/neuroos.config.yaml:ro
+      - neuroos-sessions:/root/.neuroos/sessions
+    environment:
+      - NODE_ENV=development
+      - NEUROOS_CONFIG=/app/neuroos.config.yaml
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/operator/diagnostics"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  neuroos-sessions:
+    driver: local
