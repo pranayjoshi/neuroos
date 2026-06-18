@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://neuroos.dev/schemas/IntentEvent",
+  "title": "IntentEvent",
+  "description": "A decoded user intent emitted by the NeuroOS Intent Engine.",
+  "type": "object",
+  "required": [
+    "intentId",
+    "label",
+    "confidence",
+    "posteriors",
+    "classifierType",
+    "sourceVectorId",
+    "timestampNs",
+    "endToEndLatencyMs",
+    "featureImportance",
+    "artifactFlag",
+    "feedbackLabel"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "intentId": { "type": "string", "format": "uuid" },
+    "label": {
+      "type": "string",
+      "enum": [
+        "motor_imagery_left",
+        "motor_imagery_right",
+        "motor_imagery_both_hands",
+        "motor_imagery_feet",
+        "motor_imagery_rest",
+        "p300_target",
+        "p300_non_target",
+        "scp_positive",
+        "scp_negative",
+        "attention_high",
+        "attention_low",
+        "blink",
+        "jaw_clench",
+        "idle"
+      ]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "posteriors": {
+      "type": "object",
+      "description": "Full posterior distribution. Probabilities sum to 1."
+    },
+    "classifierType": {
+      "type": "string",
+      "enum": ["lda", "csp_lda", "p300_template", "cnn", "lstm", "transformer", "ensemble"]
+    },
+    "sourceVectorId": { "type": "string", "format": "uuid" },
+    "timestampNs": { "type": "string", "pattern": "^[0-9]+$" },
+    "endToEndLatencyMs": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Target: <15 ms per BCI2000 benchmark."
+    },
+    "featureImportance": {
+      "type": "object",
+      "description": "Band-level feature importance weights per channel."
+    },
+    "artifactFlag": { "type": "boolean" },
+    "feedbackLabel": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ]
+    }
+  }
+}

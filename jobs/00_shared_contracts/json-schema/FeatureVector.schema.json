@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://neuroos.dev/schemas/FeatureVector",
+  "title": "FeatureVector",
+  "description": "Extracted signal features produced by the DSP pipeline.",
+  "type": "object",
+  "required": [
+    "vectorId",
+    "sourceFrameIndices",
+    "timestampNs",
+    "deviceId",
+    "signalType",
+    "bandPowers",
+    "spatialFeatures",
+    "erd",
+    "evokedResponse",
+    "artifactFlag",
+    "processingLatencyMs",
+    "channelLabels"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "vectorId": { "type": "string", "format": "uuid" },
+    "sourceFrameIndices": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 0 }
+    },
+    "timestampNs": { "type": "string", "pattern": "^[0-9]+$" },
+    "deviceId": { "type": "string" },
+    "signalType": {
+      "type": "string",
+      "enum": ["EEG", "EMG", "ECoG", "LFP", "SPIKE"]
+    },
+    "bandPowers": {
+      "type": "object",
+      "description": "Per-band, per-channel power. Each value is an array of [numChannels] floats.",
+      "properties": {
+        "delta":      { "type": "array", "items": { "type": "number" } },
+        "theta":      { "type": "array", "items": { "type": "number" } },
+        "alpha":      { "type": "array", "items": { "type": "number" } },
+        "beta":       { "type": "array", "items": { "type": "number" } },
+        "gamma":      { "type": "array", "items": { "type": "number" } },
+        "high_gamma": { "type": "array", "items": { "type": "number" } }
+      }
+    },
+    "spatialFeatures": {
+      "type": "array",
+      "items": { "type": "number" }
+    },
+    "erd": {
+      "type": "object",
+      "description": "Event-related desynchronization/synchronization per band.",
+      "properties": {
+        "delta":      { "type": "array", "items": { "type": "number" } },
+        "theta":      { "type": "array", "items": { "type": "number" } },
+        "alpha":      { "type": "array", "items": { "type": "number" } },
+        "beta":       { "type": "array", "items": { "type": "number" } },
+        "gamma":      { "type": "array", "items": { "type": "number" } },
+        "high_gamma": { "type": "array", "items": { "type": "number" } }
+      }
+    },
+    "evokedResponse": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "number" } },
+        { "type": "null" }
+      ]
+    },
+    "artifactFlag": { "type": "boolean" },
+    "artifactType": {
+      "type": "string",
+      "enum": ["emg", "ocular", "saturation", "motion"]
+    },
+    "processingLatencyMs": { "type": "number", "minimum": 0 },
+    "channelLabels": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

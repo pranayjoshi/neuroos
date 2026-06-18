@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://neuroos.dev/schemas/RawSignalFrame",
+  "title": "RawSignalFrame",
+  "description": "One block of multi-channel bio-signal samples from a hardware adapter.",
+  "type": "object",
+  "required": [
+    "deviceId",
+    "frameIndex",
+    "timestampNs",
+    "signalType",
+    "channels",
+    "samplesPerFrame",
+    "sampleRateHz",
+    "channelLabels",
+    "calibrated"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "deviceId": {
+      "type": "string",
+      "pattern": "^[a-z0-9_\\-]+:[a-z0-9_\\-]+:[a-zA-Z0-9\\-]+$",
+      "description": "Unique device id: <vendor>:<model>:<serial>"
+    },
+    "frameIndex": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Monotonically increasing frame sequence number."
+    },
+    "timestampNs": {
+      "type": "string",
+      "pattern": "^[0-9]+$",
+      "description": "Wall-clock nanoseconds since Unix epoch (serialized as string to avoid JS BigInt issues)."
+    },
+    "signalType": {
+      "type": "string",
+      "enum": ["EEG", "EMG", "ECoG", "LFP", "SPIKE"]
+    },
+    "channels": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": { "type": "number" }
+      },
+      "minItems": 1,
+      "description": "Shape: [numChannels][samplesPerFrame]. Values in μV when calibrated=true."
+    },
+    "samplesPerFrame": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "sampleRateHz": {
+      "type": "number",
+      "minimum": 64,
+      "maximum": 40000
+    },
+    "channelLabels": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "calibrated": {
+      "type": "boolean"
+    },
+    "eventMarkers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "code", "sampleOffset"],
+        "properties": {
+          "name": { "type": "string" },
+          "code": { "type": "integer", "minimum": 0, "maximum": 65535 },
+          "sampleOffset": { "type": "integer", "minimum": 0 }
+        }
+      }
+    }
+  }
+}
