@@ -10,6 +10,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js"
     }
   },
   "scripts": {
@@ -19,10 +23,28 @@
     "test:watch": "vitest",
     "clean": "rm -rf dist"
   },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "ws": "^8.16.0"
+  },
   "devDependencies": {
+    "@neuroos/platform-core": "workspace:*",
     "@neuroos/shared-contracts": "workspace:*",
-    "typescript": "^5.4.5",
+    "@testing-library/react": "^14.2.0",
     "@types/node": "^20.12.0",
+    "@types/react": "^18.2.0",
+    "@types/ws": "^8.5.10",
+    "jsdom": "^24.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.4.5",
     "vitest": "^1.4.0"
   }
 }

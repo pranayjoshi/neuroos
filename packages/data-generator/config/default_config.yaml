@@ -1,0 +1,27 @@
+# Default simulation parameters (BCI2000 Configuration A)
+num_channels: 16
+sample_rate_hz: 160
+samples_per_frame: 10
+snr_db: 10.0
+device_id: neuroos:simulator:SIM-001
+scenario: rest
+duration_sec: 10
+random_seed: null
+
+channel_labels:
+  - Fp1
+  - Fp2
+  - F3
+  - F4
+  - C3
+  - C4
+  - P3
+  - P4
+  - O1
+  - O2
+  - F7
+  - F8
+  - T3
+  - T4
+  - T5
+  - T6

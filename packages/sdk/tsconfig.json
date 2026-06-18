@@ -5,11 +5,13 @@
     "noEmit": true,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
+    "jsx": "react-jsx",
+    "lib": ["ES2022", "DOM"],
     "paths": {
       "@neuroos/shared-contracts/schema": ["../../jobs/00_shared_contracts/schema/index.ts"],
       "@neuroos/shared-contracts/constants": ["../../jobs/00_shared_contracts/constants/index.ts"]
     }
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "tests/**/*.tsx"],
   "exclude": ["node_modules", "dist"]
 }
